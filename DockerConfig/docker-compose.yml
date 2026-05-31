@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe
+    container_name: oracle-database
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    networks:
+      - app_network
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    restart: always
+    environment:
+      - ORACLE_PASSWORD=devOracle
+      - ORACLE_MEMORY=2GB
+      - ORACLE_DISABLE_ASYNCH_IO=true
+
+    healthcheck:
+      test: "echo 'SELECT 1 FROM dual;' | docker exec -i oracle-database sqlplus system/devOracle@//localhost:1521/XEPDB1"
+      interval: 20s
+      retries: 10
+      start_period: 40s
+      timeout: 10s
+
+  init-db:
+    image: gvenzl/oracle-xe # Usando a mesma imagem para rodar o script de inicialização
+    depends_on:
+      - oracle-db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Script para criar o esquema
+    networks:
+      - app_network
+    entrypoint: |
+      bash -c "
+      while ! echo exit | sqlplus system/devOracle@//oracle-db:1521/XEPDB1; do
+        echo 'Aguardando o Oracle subir...'
+        sleep 10
+      done
+      sqlplus system/devOracle@//oracle-db:1521/XEPDB1 @/docker-entrypoint-initdb.d/init.sql"
+volumes:
+  oracle_data:
+
+networks:
+  app_network:

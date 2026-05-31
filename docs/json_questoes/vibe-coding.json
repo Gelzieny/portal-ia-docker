@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "sum-two",
+    "problema_path": "vibecoding/sum-two/sum-two-problem.txt",
+    "base_script_path": "vibecoding/sum-two/sum_two_base_script.py",
+    "nivel": "Medio",
+    "tipo": "Matematica"
+  }
+]

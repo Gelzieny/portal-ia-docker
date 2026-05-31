@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: FastAPI",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "env": {
+        "APP_CONTEXT_PATH_ROOT": "/ia/portal-ia/v1.0",
+        "APP_VERSION": "1.0.0"
+      },
+      "args": [
+        "src.manage:app", // caminho do objeto FastAPI
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5090",
+        "--reload"
+      ],
+      "jinja": false,
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

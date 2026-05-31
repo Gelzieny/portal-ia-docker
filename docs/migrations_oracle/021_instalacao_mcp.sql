@@ -1,0 +1,92 @@
+TIPO_CLIENTE: {
+    CLD: 'Claude Desktop',
+    VSC: 'VS Code',
+    CUR: 'Cursor',
+    TER: 'Terminal',
+    CUS: 'Customizado'
+}
+
+CREATE TABLE CIA_INSTALACAO_MCP (
+    ID_INSTALACAO_MCP NUMBER(10) NOT NULL,
+    ID_SERVIDOR_MCP NUMBER(10) NOT NULL,
+    ID_USUARIO NUMBER(10) NOT NULL,
+
+    TIPO_CLIENTE VARCHAR2(3 CHAR),
+
+    DATA_INSTALACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+    CONSTRAINT PK_CIA_INSTALACAO_MCP
+        PRIMARY KEY (ID_INSTALACAO_MCP),
+
+    CONSTRAINT UK_CIA_INSTALACAO_MCP
+        UNIQUE (
+            ID_SERVIDOR_MCP,
+            ID_USUARIO
+        ),
+
+    CONSTRAINT FK_CIA_INSTALACAO_SERV
+        FOREIGN KEY (ID_SERVIDOR_MCP)
+        REFERENCES CIA_SERVIDOR_MCP (ID_SERVIDOR_MCP)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CIA_INSTALACAO_USUARIO
+        FOREIGN KEY (ID_USUARIO)
+        REFERENCES CIA_USUARIO (ID_USUARIO)
+        ON DELETE CASCADE,
+
+    CONSTRAINT CK_CIA_INSTALACAO_CLIENTE
+        CHECK (
+            TIPO_CLIENTE IN (
+                'CLD',
+                'VSC',
+                'CUR',
+                'TER',
+                'CUS'
+            )
+            OR TIPO_CLIENTE IS NULL
+        )
+)
+
+
+CREATE SEQUENCE SEQ_CIA_INSTALACAO_MCP
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE
+
+
+CREATE OR REPLACE TRIGGER TRG_BI_CIA_INSTALACAO_MCP
+BEFORE INSERT ON CIA_INSTALACAO_MCP
+FOR EACH ROW
+BEGIN
+    IF :NEW.ID_INSTALACAO_MCP IS NULL THEN
+        SELECT SEQ_CIA_INSTALACAO_MCP.NEXTVAL
+          INTO :NEW.ID_INSTALACAO_MCP
+          FROM DUAL
+    END IF
+END
+
+CREATE INDEX IDX_CIA_INSTALACAO_SERV
+    ON CIA_INSTALACAO_MCP (ID_SERVIDOR_MCP)
+
+CREATE INDEX IDX_CIA_INSTALACAO_USUARIO
+    ON CIA_INSTALACAO_MCP (ID_USUARIO)
+
+
+COMMENT ON TABLE CIA_INSTALACAO_MCP IS
+'Tabela responsável pelo armazenamento das instalações de servidores MCP realizadas pelos usuários da plataforma.'
+
+COMMENT ON COLUMN CIA_INSTALACAO_MCP.ID_INSTALACAO_MCP IS
+'Identificador único da instalação MCP cadastrada.'
+
+COMMENT ON COLUMN CIA_INSTALACAO_MCP.ID_SERVIDOR_MCP IS
+'Identificador do servidor MCP instalado pelo usuário.'
+
+COMMENT ON COLUMN CIA_INSTALACAO_MCP.ID_USUARIO IS
+'Identificador do usuário responsável pela instalação do servidor MCP.'
+
+COMMENT ON COLUMN CIA_INSTALACAO_MCP.TIPO_CLIENTE IS
+'Tipo de cliente utilizado na instalação MCP. CLD = Claude Desktop, VSC = Visual Studio Code, CUR = Cursor, TER = Terminal, CUS = Customizado.'
+
+COMMENT ON COLUMN CIA_INSTALACAO_MCP.DATA_INSTALACAO IS
+'Data e hora de realização da instalação do servidor MCP.'

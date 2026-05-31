@@ -1,0 +1,17 @@
+fastapi==0.128.0
+oracledb==2.1.0
+requests
+psutil
+pyjwt
+gunicorn
+uvicorn[standard]
+psycopg2-binary
+pydantic-settings
+python-dotenv
+httpx
+redis
+asyncpg
+bcrypt
+python-multipart
+pydantic[email]
+pytest

@@ -1,0 +1,131 @@
+TIPO_MOTIVO_DENUNCIA:
+    CI = Conteúdo Inapropriado
+    II = Informação Incorreta
+    LG = Violação LGPD
+    UI = Uso Indevido
+    DP = Duplicado
+    OU = Outro
+
+STAT_DENUNCIA:
+    PE = Pendente
+    AN = Analisado
+    DS = Descartado
+
+CREATE TABLE CIA_DENUNCIA_PROMPT (
+    ID_DENUNCIA_PROMPT NUMBER(10) NOT NULL,
+    ID_PROMPT NUMBER(10) NOT NULL,
+    ID_USUARIO_DENUNCIANTE NUMBER(10) NOT NULL,
+    TIPO_MOTIVO_DENUNCIA VARCHAR2(2 CHAR) NOT NULL,
+    DESC_DENUNCIA CLOB,
+    STAT_DENUNCIA VARCHAR2(2 CHAR) DEFAULT 'PE' NOT NULL,
+    ID_USUARIO_RESOLUCAO NUMBER(10),
+    DATA_RESOLUCAO TIMESTAMP,
+    DESC_OBSERVACAO_RESOLUCAO CLOB,
+    DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+    CONSTRAINT PK_CIA_DENUNCIA_PROMPT PRIMARY KEY (ID_DENUNCIA_PROMPT),
+
+    CONSTRAINT UK_CIA_DENUNCIA_PROMPT
+        UNIQUE (
+            ID_PROMPT,
+            ID_USUARIO_DENUNCIANTE
+        ),
+
+    CONSTRAINT FK_CIA_DENUNCIA_PROMPT
+        FOREIGN KEY (ID_PROMPT)
+        REFERENCES CIA_PROMPT (ID_PROMPT)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CIA_DENUNCIA_USUARIO
+        FOREIGN KEY (ID_USUARIO_DENUNCIANTE)
+        REFERENCES CIA_USUARIO (ID_USUARIO)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CIA_DENUNCIA_RESOLUCAO
+        FOREIGN KEY (ID_USUARIO_RESOLUCAO)
+        REFERENCES CIA_USUARIO (ID_USUARIO)
+        ON DELETE SET NULL,
+
+    CONSTRAINT CK_CIA_DENUNCIA_MOTIVO
+        CHECK (
+            TIPO_MOTIVO_DENUNCIA IN (
+                'CI',
+                'II',
+                'LG',
+                'UI',
+                'DP',
+                'OU'
+            )
+        ),
+
+    CONSTRAINT CK_CIA_DENUNCIA_STATUS
+        CHECK (
+            STAT_DENUNCIA IN (
+                'PE',
+                'AN',
+                'DS'
+            )
+        )
+)
+
+
+CREATE SEQUENCE SEQ_CIA_DENUNCIA_PROMPT
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE
+
+
+CREATE OR REPLACE TRIGGER TRG_BI_CIA_DENUNCIA_PROMPT
+BEFORE INSERT ON CIA_DENUNCIA_PROMPT
+FOR EACH ROW
+BEGIN
+    IF :NEW.ID_DENUNCIA_PROMPT IS NULL THEN
+        SELECT SEQ_CIA_DENUNCIA_PROMPT.NEXTVAL
+          INTO :NEW.ID_DENUNCIA_PROMPT
+          FROM DUAL
+    END IF
+END
+
+CREATE INDEX IDX_CIA_DENUNCIA_PROMPT_PEND
+    ON CIA_DENUNCIA_PROMPT (STAT_DENUNCIA)
+
+CREATE INDEX IDX_CIA_DENUNCIA_PROMPT
+    ON CIA_DENUNCIA_PROMPT (ID_PROMPT)
+
+CREATE INDEX IDX_CIA_DENUNCIA_USUARIO
+    ON CIA_DENUNCIA_PROMPT (ID_USUARIO_DENUNCIANTE)
+
+
+COMMENT ON TABLE CIA_DENUNCIA_PROMPT IS
+'Tabela responsável pelo armazenamento das denúncias realizadas pelos usuários sobre prompts cadastrados na plataforma.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.ID_DENUNCIA_PROMPT IS
+'Identificador único da denúncia de prompt cadastrada.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.ID_PROMPT IS
+'Identificador do prompt denunciado pelo usuário.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.ID_USUARIO_DENUNCIANTE IS
+'Identificador do usuário responsável pela denúncia do prompt.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.TIPO_MOTIVO_DENUNCIA IS
+'Motivo da denúncia registrada. CI = Conteúdo Inapropriado, II = Informação Incorreta, LG = Violação LGPD, UI = Uso Indevido, DP = Duplicado, OU = Outro.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.DESC_DENUNCIA IS
+'Descrição complementar informada pelo usuário sobre a denúncia realizada.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.STAT_DENUNCIA IS
+'Situação atual da denúncia. PE = Pendente, AN = Analisado, DS = Descartado.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.ID_USUARIO_RESOLUCAO IS
+'Identificador do usuário responsável pela análise ou resolução da denúncia.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.DATA_RESOLUCAO IS
+'Data e hora da resolução da denúncia registrada.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.DESC_OBSERVACAO_RESOLUCAO IS
+'Observações registradas durante o processo de análise ou resolução da denúncia.'
+
+COMMENT ON COLUMN CIA_DENUNCIA_PROMPT.DATA_CRIACAO IS
+'Data e hora de criação do registro da denúncia.'

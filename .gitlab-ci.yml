@@ -1,0 +1,4 @@
+include:
+  - project: 'ssi-devops/gitlab-ci-templates'
+    ref: master
+    file: 'fastapi-python.gitlab-ci.yml'

@@ -1,0 +1,180 @@
+CREATE TABLE CIA_IDEIA (
+    ID_IDEIA NUMBER(10) NOT NULL,
+    NOME_IDEIA VARCHAR2(240 CHAR) NOT NULL,
+    DESC_IDEIA CLOB NOT NULL,
+    ID_USUARIO_AUTOR NUMBER(10) NOT NULL,
+
+    STAT_MODERACAO VARCHAR2(2 CHAR) DEFAULT 'AC' NOT NULL,
+    STAT_IDEIA VARCHAR2(2 CHAR),
+
+    ID_VERSAO_IDEIA NUMBER(10),
+
+    DESC_CURADORIA CLOB,
+    DESC_MOTIVO_REJEICAO CLOB,
+
+    DATA_SOLICITACAO_EXCLUSAO TIMESTAMP,
+    DESC_MOTIVO_SOLIC_EXCLUSAO CLOB,
+
+    DATA_EXCLUSAO TIMESTAMP,
+    DATA_PUBLICACAO TIMESTAMP,
+
+    ID_USUARIO_REVISAO NUMBER(10),
+    DATA_REVISAO TIMESTAMP,
+
+    DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    DATA_ATUALIZACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+    CONSTRAINT PK_CIA_IDEIA
+        PRIMARY KEY (ID_IDEIA),
+
+    CONSTRAINT FK_CIA_IDEA_AUTOR
+        FOREIGN KEY (ID_USUARIO_AUTOR)
+        REFERENCES CIA_USUARIO (ID_USUARIO)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT FK_CIA_IDEA_REVISAO
+        FOREIGN KEY (ID_USUARIO_REVISAO)
+        REFERENCES CIA_USUARIO (ID_USUARIO)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_CIA_IDEA_VERSAO
+        FOREIGN KEY (ID_VERSAO_IDEIA)
+        REFERENCES CIA_VERSAO_IDEIA (ID_VERSAO_IDEIA)
+        ON DELETE SET NULL,
+
+    CONSTRAINT CK_CIA_IDEA_STAT_MOD
+        CHECK (
+            STAT_MODERACAO IN (
+                'AC',
+                'PB',
+                'RJ',
+                'ES',
+                'EX'
+            )
+        ),
+
+    CONSTRAINT CK_CIA_IDEA_STATUS
+        CHECK (
+            STAT_IDEIA IN (
+                'PL',
+                'ED',
+                'CO'
+            )
+        ),
+
+    CONSTRAINT CK_CIA_IDEA_EXCLUSAO
+        CHECK (
+            STAT_MODERACAO <> 'EX'
+            OR DATA_EXCLUSAO IS NOT NULL
+        ),
+
+    CONSTRAINT CK_CIA_IDEA_VERSAO
+        CHECK (
+            STAT_IDEIA IS NULL
+            OR ID_VERSAO_IDEIA IS NOT NULL
+        )
+)
+
+
+CREATE SEQUENCE SEQ_CIA_IDEIA
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE
+
+
+CREATE OR REPLACE TRIGGER TRG_BI_CIA_IDEIA
+BEFORE INSERT ON CIA_IDEIA
+FOR EACH ROW
+BEGIN
+    IF :NEW.ID_IDEIA IS NULL THEN
+        SELECT SEQ_CIA_IDEIA.NEXTVAL
+          INTO :NEW.ID_IDEIA
+          FROM DUAL
+    END IF
+END
+
+CREATE OR REPLACE TRIGGER TRG_BU_CIA_IDEIA
+BEFORE UPDATE ON CIA_IDEIA
+FOR EACH ROW
+BEGIN
+    :NEW.DATA_ATUALIZACAO := CURRENT_TIMESTAMP
+END
+
+CREATE INDEX IDX_CIA_IDEA_AUTOR
+    ON CIA_IDEIA (
+        ID_USUARIO_AUTOR,
+        DATA_CRIACAO
+    )
+
+CREATE INDEX IDX_CIA_IDEA_MODERACAO
+    ON CIA_IDEIA (
+        STAT_MODERACAO,
+        DATA_CRIACAO
+    )
+
+CREATE INDEX IDX_CIA_IDEA_PUBLICACAO
+    ON CIA_IDEIA (
+        DATA_PUBLICACAO
+    )
+
+CREATE INDEX IDX_CIA_IDEA_STATUS_VERSAO
+    ON CIA_IDEIA (
+        ID_VERSAO_IDEIA,
+        STAT_IDEIA
+    )
+
+
+COMMENT ON TABLE CIA_IDEIA IS
+'Tabela responsável pelo armazenamento das ideias cadastradas pelos usuários na plataforma.'
+
+COMMENT ON COLUMN CIA_IDEIA.ID_IDEIA IS
+'Identificador único da ideia cadastrada.'
+
+COMMENT ON COLUMN CIA_IDEIA.NOME_IDEIA IS
+'Título da ideia cadastrada pelo usuário.'
+
+COMMENT ON COLUMN CIA_IDEIA.DESC_IDEIA IS
+'Descrição detalhada da ideia cadastrada na plataforma.'
+
+COMMENT ON COLUMN CIA_IDEIA.ID_USUARIO_AUTOR IS
+'Identificador do usuário responsável pela criação da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.STAT_MODERACAO IS
+'Situação da moderação da ideia. AC = Aguardando Curadoria, PB = Publicada, RJ = Rejeitada, ES = Exclusão Solicitada, EX = Excluída.'
+
+COMMENT ON COLUMN CIA_IDEIA.STAT_IDEIA IS
+'Situação funcional da ideia dentro do fluxo de evolução da plataforma.'
+
+COMMENT ON COLUMN CIA_IDEIA.ID_VERSAO_IDEIA IS
+'Identificador da versão associada à ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DESC_CURADORIA IS
+'Observações e anotações realizadas durante o processo de curadoria da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DESC_MOTIVO_REJEICAO IS
+'Descrição do motivo de rejeição aplicado à ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_SOLICITACAO_EXCLUSAO IS
+'Data e hora da solicitação de exclusão da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DESC_MOTIVO_SOLIC_EXCLUSAO IS
+'Descrição do motivo informado para solicitação de exclusão da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_EXCLUSAO IS
+'Data e hora da exclusão definitiva da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_PUBLICACAO IS
+'Data e hora da publicação da ideia na plataforma.'
+
+COMMENT ON COLUMN CIA_IDEIA.ID_USUARIO_REVISAO IS
+'Identificador do usuário responsável pela revisão ou curadoria da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_REVISAO IS
+'Data e hora da revisão realizada na ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_CRIACAO IS
+'Data e hora de criação do registro da ideia.'
+
+COMMENT ON COLUMN CIA_IDEIA.DATA_ATUALIZACAO IS
+'Data e hora da última atualização do registro da ideia.'

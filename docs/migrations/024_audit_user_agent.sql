@@ -1,0 +1,4 @@
+
+    ALTER TABLE audit_logs
+      ADD COLUMN IF NOT EXISTS user_agent TEXT;
+  
