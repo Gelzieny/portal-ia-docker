@@ -1,0 +1,62 @@
+# PostgreSQL isolado + aplicação das migrações em docs/migrations_postgres.
+# Não altera o docker-compose.yml principal.
+#
+# Subir banco e rodar migrações:
+#   docker compose -f docker-compose.migrations-postgres.yml up -d
+#
+# Apenas executar migrações (banco já no ar):
+#   docker compose -f docker-compose.migrations-postgres.yml run --rm migrate-cia
+#
+# Somente o banco (sem migrar):
+#   docker compose -f docker-compose.migrations-postgres.yml up -d postgres-cia
+#
+# Conexão local: host=localhost port=5435 db=goia_cia_db user=goia_user
+#
+# Ordem das migrações: docs/migrations_postgres/migration.order
+# Recriar banco do zero: docker compose -f docker-compose.migrations-postgres.yml down -v
+
+services:
+  postgres-cia:
+    image: pgvector/pgvector:pg16
+    container_name: goia_postgres_cia
+    environment:
+      POSTGRES_DB: goia_cia_db
+      POSTGRES_USER: goia_user
+      POSTGRES_PASSWORD: ${CIA_POSTGRES_PASSWORD:-dbb856f39879cded55e1d34fe143a515}
+    ports:
+      - "${CIA_POSTGRES_PORT:-5435}:5432"
+    volumes:
+      - postgres_cia_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U goia_user -d goia_cia_db",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  migrate-cia:
+    image: pgvector/pgvector:pg16
+    container_name: goia_migrate_cia
+    depends_on:
+      postgres-cia:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres-cia
+      PGPORT: "5432"
+      PGUSER: goia_user
+      PGPASSWORD: ${CIA_POSTGRES_PASSWORD:-dbb856f39879cded55e1d34fe143a515}
+      PGDATABASE: goia_cia_db
+      MIGRATIONS_DIR: /migrations
+    volumes:
+      - ./docs/migrations_postgres:/migrations:ro
+      - ./scripts/docker/run_cia_migrations.sh:/run_cia_migrations.sh:ro
+    entrypoint: ["/bin/bash", "/run_cia_migrations.sh"]
+    restart: "no"
+
+volumes:
+  postgres_cia_data:
