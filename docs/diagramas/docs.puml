@@ -1,0 +1,117 @@
+@startuml
+' DER gerado a partir de docs/migrations_oracle
+hide circle
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+
+entity "CIA_USUARIO" as CIA_USUARIO {
+  * ID_USUARIO : PK
+  * NOME_USUARIO : 
+  * DESC_EMAIL : 
+  o CODG_USUARIO : 
+  * TIPO_PERFIL : 
+  * NOME_ORGAO : 
+  o URL_AVATAR : 
+  * INDI_ATIVO : 
+  * DATA_CRIACAO : 
+  * DATA_ATUALIZACAO : 
+  o HASH_SENHA : 
+}
+
+entity "CIA_MODELO" as CIA_MODELO {
+  * ID_MODELO : PK
+  * NOME_MODELO : 
+  * SLUG_MODELO : 
+  * ID_CATEGORIA_MODELO : FK
+  * DESC_MODELO : 
+  o INFO_CAPABILIDADE : 
+  * STAT_MODELO : 
+  o QTDE_JANELA_CONTEXTO : 
+  o INFO_LIMITE_USO : 
+  o TAG : 
+  * INDI_NOVO : 
+  * INDI_DESTAQUE : 
+  * INDI_ATIVO : 
+  * NUMR_ORDEM : 
+  * DATA_CRIACAO : 
+  * DATA_ATUALIZACAO : 
+  * INDI_APROVACAO_ACESSO : 
+  * DESC_RESUMO_ACESSO : 
+  * DESC_DOCUMENTACAO_ACESSO : 
+  o INFO_ENDPOINT_PADRAO : 
+  * TIPO_AUTENTICACAO_PADRAO : 
+  o ID_FORNECEDOR : FK
+}
+
+entity "CIA_METRICA" as CIA_METRICA {
+  * ID_METRICA : PK
+  * DESC_METRICA : 
+  * TIPO_METRICA : 
+}
+
+entity "CIA_BANCO_QUESTAO" as CIA_BANCO_QUESTAO {
+  * ID_BANCO_QUESTAO : PK
+  o ID_METRICA : FK
+  * INFO_PERGUNTA : 
+  * INFO_GABARITO : 
+}
+
+entity "CIA_RESULTADO" as CIA_RESULTADO {
+  * ID_RESULTADO : PK
+  * DATA_CRIACAO : 
+  * INFO_RESULTADO : 
+  o ID_BANCO_QUESTAO : FK
+  o ID_MODELO : FK
+  * TIPO_RESULTADO : 
+  * INDI_ERRO : 
+  o INFO_ERRO : 
+  * QTDE_TOTAL_TOKEN : 
+  * QTDE_TOKEN_INPUT : 
+  * QTDE_TOKEN_OUTPUT : 
+}
+
+entity "CIA_INDICADOR" as CIA_INDICADOR {
+  * ID_INDICADOR : PK
+  * DATA_CRIACAO : 
+  * VALR_INDICADOR : 
+  o ID_MODELO : FK
+  o ID_METRICA : FK
+}
+
+entity "CIA_ARTIGO_DOCUMENTACAO" as CIA_ARTIGO_DOCUMENTACAO {
+  * ID_ARTIGO_DOCUMENTACAO : PK
+  o ID_SECAO_DOCUMENTACAO : FK
+  * NOME_ARTIGO : 
+  * SLUG_ARTIGO : 
+  * DESC_CONTEUDO : 
+  * QTDE_TEMPO_LEITURA : 
+  * NUMR_ORDEM : 
+  o ID_USUARIO_AUTOR : FK
+  * INDI_PUBLICADO : 
+  * INDI_ATIVO : 
+  * DATA_CRIACAO : 
+  * DATA_ATUALIZACAO : 
+}
+
+entity "CIA_SECAO_DOCUMENTACAO" as CIA_SECAO_DOCUMENTACAO {
+  * ID_SECAO_DOCUMENTACAO : PK
+  * NOME_SECAO : 
+  * SLUG_SECAO : 
+  * NUMR_ORDEM : 
+  o ID_SECAO_PAI : FK
+  * INDI_ATIVO : 
+}
+
+CIA_USUARIO ||--o{ CIA_ARTIGO_DOCUMENTACAO : "usuarioSistema"
+CIA_SECAO_DOCUMENTACAO ||--o{ CIA_ARTIGO_DOCUMENTACAO : "possui \n pertence"
+CIA_SECAO_DOCUMENTACAO ||--o{ CIA_SECAO_DOCUMENTACAO : "possui \n pertence"
+CIA_METRICA ||--o{ CIA_BANCO_QUESTAO : "possui \n pertence"
+CIA_MODELO ||--o{ CIA_INDICADOR : "possui \n pertence"
+CIA_METRICA ||--o{ CIA_INDICADOR : "possui \n pertence"
+CIA_BANCO_QUESTAO ||--o{ CIA_RESULTADO : "possui \n pertence"
+CIA_MODELO ||--o{ CIA_RESULTADO : "possui \n pertence"
+@enduml
