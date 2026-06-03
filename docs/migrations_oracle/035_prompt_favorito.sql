@@ -1,0 +1,41 @@
+CREATE TABLE CIA_PROMPT_FAVORITO (
+    CODG_USUARIO NUMBER(10) NOT NULL,
+    ID_PROMPT NUMBER(10) NOT NULL,
+    DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+    CONSTRAINT PK_CIA_PROMPT_FAVORITO
+        PRIMARY KEY (
+            CODG_USUARIO,
+            ID_PROMPT
+        ),
+
+    CONSTRAINT FK_CIA_PROMPT_FAVORITO_USUARIO
+        FOREIGN KEY (CODG_USUARIO)
+        REFERENCES USUARIO_SISTEMA (CODG_USUARIO)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CIA_PROMPT_FAVORITO
+        FOREIGN KEY (ID_PROMPT)
+        REFERENCES CIA_PROMPT (ID_PROMPT)
+        ON DELETE CASCADE
+)
+
+
+CREATE INDEX IDX_CIA_PROMPT_FAVORITO_USUARIO
+    ON CIA_PROMPT_FAVORITO (
+        CODG_USUARIO,
+        DATA_CRIACAO
+    )
+
+
+COMMENT ON TABLE CIA_PROMPT_FAVORITO IS
+'Tabela responsável pelo armazenamento dos prompts marcados como favoritos pelos usuários da plataforma.'
+
+COMMENT ON COLUMN CIA_PROMPT_FAVORITO.CODG_USUARIO IS
+'Identificador do usuário responsável pela marcação do prompt como favorito.'
+
+COMMENT ON COLUMN CIA_PROMPT_FAVORITO.ID_PROMPT IS
+'Identificador do prompt marcado como favorito pelo usuário.'
+
+COMMENT ON COLUMN CIA_PROMPT_FAVORITO.DATA_CRIACAO IS
+'Data e hora de criação do registro de favorito do prompt.'

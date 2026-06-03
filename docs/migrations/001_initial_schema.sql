@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
   id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name            VARCHAR(200) NOT NULL,
   email           VARCHAR(200)  UNIQUE,
-  codg_usuario    VARCHAR(32) NOT NULL UNIQUE,
+  codg_usuario    VARCHAR(32) NOT NULL,
   role            user_role NOT NULL DEFAULT 'servidor',
   organ           VARCHAR(200) NOT NULL DEFAULT '',
   avatar_url      VARCHAR(500),
@@ -35,3 +35,4 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER users_updated_at
   BEFORE UPDATE ON users
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  

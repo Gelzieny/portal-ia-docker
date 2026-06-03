@@ -1,11 +1,11 @@
 
     INSERT INTO users (name, email, codg_usuario, role, organ, is_active)
     VALUES
-      ('Demo Produto GO.IA', 'demo.produto@goia.local', 'demo.produto', 'gestor_produto', 'Secretaria-Geral de Governo', TRUE),
-      ('Ana Demo', 'demo.ana@goia.local', 'demo.ana', 'servidor', 'Secretaria de Administração', TRUE),
-      ('Bruno Demo', 'demo.bruno@goia.local', 'demo.bruno', 'gestor', 'Secretaria de Economia', TRUE),
-      ('Carla Demo', 'demo.carla@goia.local', 'demo.carla', 'curador', 'Controladoria-Geral do Estado', TRUE),
-      ('Diego Demo', 'demo.diego@goia.local', 'demo.diego', 'servidor', 'Secretaria de Saúde', TRUE)
+      ('Demo Produto GO.IA', 'demo.produto@goia.local', '', 'gestor_produto', 'Secretaria-Geral de Governo', TRUE),
+      ('Ana Demo', 'demo.ana@goia.local', '', 'servidor', 'Secretaria de Administração', TRUE),
+      ('Bruno Demo', 'demo.bruno@goia.local', '', 'gestor', 'Secretaria de Economia', TRUE),
+      ('Carla Demo', 'demo.carla@goia.local', '', 'curador', 'Controladoria-Geral do Estado', TRUE),
+      ('Diego Demo', 'demo.diego@goia.local', '', 'servidor', 'Secretaria de Saúde', TRUE)
     ON CONFLICT (email) DO UPDATE SET
       name = EXCLUDED.name,
       role = EXCLUDED.role,

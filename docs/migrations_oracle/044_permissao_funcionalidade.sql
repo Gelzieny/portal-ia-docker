@@ -7,19 +7,16 @@ TIPO_PERFIL:
     'GP': Gestor Produto - Perfil com acesso para gerenciar o catálogo de produtos, incluindo adição, edição e remoção de produtos, bem como visualização de relatórios relacionados a vendas e desempenho dos produtos.
 
 CREATE TABLE CIA_PERMISSAO_FUNCIONALIDADE (
+    ID_PERMISSAO_FUNCIONALIDADE  NUMBER(9) NOT NULL,
     TIPO_PERFIL VARCHAR2(2 CHAR) NOT NULL,
-
     CHAVE_FUNCIONALIDADE VARCHAR2(200 CHAR) NOT NULL,
-
     INDI_HABILITADO VARCHAR2(1 CHAR) DEFAULT 'N' NOT NULL,
-
     DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-
     DATA_ATUALIZACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
     CONSTRAINT PK_CIA_PERMISSAO_FUNC
         PRIMARY KEY (
-            TIPO_PERFIL,
+            ID_PERMISSAO_FUNCIONALIDADE,
             CHAVE_FUNCIONALIDADE
         ),
 

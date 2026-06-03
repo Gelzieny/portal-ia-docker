@@ -3,7 +3,7 @@
       key        TEXT PRIMARY KEY,
       name       TEXT NOT NULL,
       description TEXT NULL,
-      area       TEXT NOT NULL,
+      area       TEXT NOT NULL, 
       menu_label TEXT NULL,
       menu_path  TEXT NULL,
       sort_order INTEGER NOT NULL DEFAULT 0,
