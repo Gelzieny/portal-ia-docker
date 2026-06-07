@@ -75,7 +75,7 @@ COMMENT ON COLUMN CIA_DOCUMENTACAO_ARTIGO.NOME_CURTO IS
 'Identificador textual único utilizado em URLs e navegação da documentação.'
 
 COMMENT ON COLUMN CIA_DOCUMENTACAO_ARTIGO.DESC_CONTEUDO IS
-'Conteúdo textual completo do artigo de documentação.'
+'Conteúdo textual completo do artigo de documentação (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_DOCUMENTACAO_ARTIGO.QTDE_TEMPO_LEITURA IS
 'Quantidade estimada de minutos necessários para leitura do artigo.'

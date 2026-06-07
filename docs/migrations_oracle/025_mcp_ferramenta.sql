@@ -1,18 +1,11 @@
 CREATE TABLE CIA_MCP_FERRAMENTA (
     ID_MCP_FERRAMENTA NUMBER(10) NOT NULL,
-
     ID_MCP_SERVIDOR NUMBER(10) NOT NULL,
-
     NOME_FERRAMENTA VARCHAR2(200 CHAR) NOT NULL,
-
-    DESC_FERRAMENTA CLOB DEFAULT '' NOT NULL,
-
-    INFO_PARAMETRO CLOB DEFAULT '[]' NOT NULL,
-
+    DESC_FERRAMENTA VARCHAR2(3000 CHAR) DEFAULT '' NOT NULL,
+    JSON_PARAMETRO CLOB DEFAULT '[]' NOT NULL,
     TIPO_RETORNO VARCHAR2(100 CHAR),
-
     DESC_EXEMPLO_CHAMADA CLOB,
-
     NUMR_ORDEM NUMBER(10) DEFAULT 0 NOT NULL,
 
     CONSTRAINT PK_CIA_MCP_FERRAMENTA PRIMARY KEY (ID_MCP_FERRAMENTA),
@@ -58,7 +51,7 @@ COMMENT ON COLUMN CIA_MCP_FERRAMENTA.NOME_FERRAMENTA IS
 'Nome de identificação da ferramenta disponibilizada pelo servidor MCP.'
 
 COMMENT ON COLUMN CIA_MCP_FERRAMENTA.DESC_FERRAMENTA IS
-'Descrição detalhada da ferramenta MCP e suas funcionalidades.'
+'Descrição detalhada da ferramenta MCP e suas funcionalidades (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_FERRAMENTA.INFO_PARAMETRO IS
 'Lista estruturada de parâmetros aceitos pela ferramenta MCP armazenada em formato JSON.'
@@ -67,7 +60,7 @@ COMMENT ON COLUMN CIA_MCP_FERRAMENTA.TIPO_RETORNO IS
 'Tipo de retorno esperado pela execução da ferramenta MCP.'
 
 COMMENT ON COLUMN CIA_MCP_FERRAMENTA.DESC_EXEMPLO_CHAMADA IS
-'Exemplo de chamada e utilização da ferramenta MCP.'
+'Exemplo de chamada e utilização da ferramenta MCP (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_FERRAMENTA.NUMR_ORDEM IS
 'Ordem de exibição da ferramenta MCP nas interfaces da plataforma.'

@@ -98,7 +98,7 @@ COMMENT ON COLUMN CIA_PROMPT_AVALIACAO.NUMR_AVALIACAO IS
 'Nota atribuída ao prompt pelo usuário, variando de 1 a 5.'
 
 COMMENT ON COLUMN CIA_PROMPT_AVALIACAO.DESC_COMENTARIO IS
-'Comentário textual informado pelo usuário na avaliação do prompt.'
+'Comentário textual informado pelo usuário na avaliação do prompt (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_AVALIACAO.INDI_UTILIZADO_ANTES IS
 'Indica se o usuário já havia utilizado o prompt anteriormente. S = Sim, N = Não.'

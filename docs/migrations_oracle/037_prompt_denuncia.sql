@@ -113,7 +113,7 @@ COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.TIPO_MOTIVO_DENUNCIA IS
 'Motivo da denúncia registrada. CI = Conteúdo Inapropriado, II = Informação Incorreta, LG = Violação LGPD, UI = Uso Indevido, DP = Duplicado, OU = Outro.'
 
 COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.DESC_DENUNCIA IS
-'Descrição complementar informada pelo usuário sobre a denúncia realizada.'
+'Descrição complementar informada pelo usuário sobre a denúncia realizada (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.STAT_DENUNCIA IS
 'Situação atual da denúncia. PE = Pendente, AN = Analisado, DS = Descartado.'
@@ -125,7 +125,7 @@ COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.DATA_RESOLUCAO IS
 'Data e hora da resolução da denúncia registrada.'
 
 COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.DESC_OBSERVACAO_RESOLUCAO IS
-'Observações registradas durante o processo de análise ou resolução da denúncia.'
+'Observações registradas durante o processo de análise ou resolução da denúncia (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_DENUNCIA.DATA_CRIACAO IS
 'Data e hora de criação do registro da denúncia.'

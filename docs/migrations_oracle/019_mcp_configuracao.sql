@@ -1,9 +1,9 @@
 TIPO_CLIENTE: {
-    CLD: 'Claude Desktop',
-    VSC: 'VS Code',
-    CUR: 'Cursor',
-    TER: 'Terminal',
-    CUS: 'Customizado'
+    CD: 'Claude Desktop',
+    VC: 'VS Code',
+    CR: 'Cursor',
+    TR: 'Terminal',
+    CU: 'Customizado'
 }
 
 CREATE TABLE CIA_MCP_CONFIGURACAO (
@@ -11,7 +11,7 @@ CREATE TABLE CIA_MCP_CONFIGURACAO (
     ID_MCP_SERVIDOR NUMBER(10) NOT NULL,
     TIPO_CLIENTE VARCHAR2(20 CHAR) NOT NULL,
     NOME_CONFIGURACAO VARCHAR2(100 CHAR) NOT NULL,
-    INFO_CONFIGURACAO CLOB NOT NULL,
+    JSON_CONFIGURACAO CLOB NOT NULL,
     DESC_OBSERVACAO CLOB,
     NUMR_ORDEM NUMBER(10) DEFAULT 0 NOT NULL,
 
@@ -26,11 +26,11 @@ CREATE TABLE CIA_MCP_CONFIGURACAO (
     CONSTRAINT CK_CIA_CONFIG_MCP_CLIENTE
         CHECK (
             TIPO_CLIENTE IN (
-                'CLD',
-                'VSC',
-                'CUR',
-                'TER',
-                'CUS'
+                'CD',
+                'VC',
+                'CR',
+                'TR',
+                'CU'
             )
         )
 )
@@ -73,11 +73,11 @@ COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.TIPO_CLIENTE IS
 COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.NOME_CONFIGURACAO IS
 'Nome identificador da configuração MCP disponibilizada ao cliente.'
 
-COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.INFO_CONFIGURACAO IS
+COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.JSON_CONFIGURACAO IS
 'Conteúdo estruturado da configuração MCP em formato JSON ou textual.'
 
 COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.DESC_OBSERVACAO IS
-'Observações complementares relacionadas à configuração MCP.'
+'Observações complementares relacionadas à configuração MCP (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_CONFIGURACAO.NUMR_ORDEM IS
 'Ordem de exibição da configuração MCP nas interfaces da plataforma.'

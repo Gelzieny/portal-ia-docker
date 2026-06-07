@@ -33,10 +33,10 @@ COMMENT ON COLUMN CIA_CARTA_SERVICO.ID_CARTA_SERVICO IS
 'Identificador único da carta de serviço cadastrada na plataforma.'
 
 COMMENT ON COLUMN CIA_CARTA_SERVICO.JSON_CONTEUDO IS
-'Conteúdo textual completo da carta de serviço.'
+'Conteúdo textual completo da carta de serviço (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_CARTA_SERVICO.JSON_METADADO IS
 'Metadados estruturados relacionados à carta de serviço armazenados em formato JSON.'
 
 COMMENT ON COLUMN CIA_CARTA_SERVICO.JSON_EMBEDDING IS
-'Informações vetoriais utilizadas em mecanismos de busca semântica e inteligência artificial.'
+'Informações vetoriais utilizadas em mecanismos de busca semântica e inteligência artificial (tipo do arquivo .md).'

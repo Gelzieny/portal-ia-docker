@@ -69,7 +69,7 @@ COMMENT ON COLUMN CIA_PROMPT_CATEGORIA.NOME_ICONE IS
 'Nome do ícone associado visualmente à categoria de prompt.'
 
 COMMENT ON COLUMN CIA_PROMPT_CATEGORIA.DESC_CATEGORIA IS
-'Descrição detalhada da categoria de prompt cadastrada.'
+'Descrição detalhada da categoria de prompt cadastrada (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_CATEGORIA.INDI_ATIVO IS
 'Indica se a categoria de prompt está ativa na plataforma. S = Sim, N = Não.'

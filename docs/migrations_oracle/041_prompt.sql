@@ -6,22 +6,22 @@ STAT_PUBLICACAO:
     'ER': Em Revisão,
     'AR': Arquivado
 
-NIVEL_DIFICULDADE:
+TIPO_NIVEL_DIFICULDADE:
     'IN': Iniciante,
     'IT': Intermediário,
     'AV': Avançado
 
 CREATE TABLE CIA_PROMPT (
     ID_PROMPT NUMBER(10) NOT NULL,
-    TITULO_PROMPT VARCHAR2(300 CHAR) NOT NULL,
-    DESC_PROMPT CLOB DEFAULT '' NOT NULL,
+    NOME_TITULO VARCHAR2(300 CHAR) NOT NULL,
+    DESC_PROMPT VARCHAR2(500 CHAR) DEFAULT '' NOT NULL,
     DESC_CONTEUDO CLOB NOT NULL,
     ID_PROMPT_CATEGORIA NUMBER(10),
     ID_MODELO NUMBER(10),
-    DESC_ETIQUETA__PROMPT CLOB DEFAULT '[]' NOT NULL,
-    NIVEL_DIFICULDADE VARCHAR2(2 CHAR) DEFAULT 'IN' NOT NULL,
+    JSON_ETIQUETA_PROMPT CLOB DEFAULT '[]' NOT NULL,
+    TIPO_NIVEL_DIFICULDADE VARCHAR2(2 CHAR) DEFAULT 'IN' NOT NULL,
     QTDE_USO NUMBER(10) DEFAULT 0 NOT NULL,
-    INFO_VARIAVEL CLOB DEFAULT '[]' NOT NULL,
+    JSON_VARIAVEL CLOB DEFAULT '[]' NOT NULL,
     CODG_USUARIO_AUTOR NUMBER(10),
     INDI_PUBLICO VARCHAR2(1 CHAR) DEFAULT 'S' NOT NULL,
     INDI_ATIVO VARCHAR2(1 CHAR) DEFAULT 'S' NOT NULL,
@@ -34,11 +34,11 @@ CREATE TABLE CIA_PROMPT (
     DATA_SUBMISSAO TIMESTAMP,
     CODG_USUARIO_REVISAO NUMBER(10),
     DATA_REVISAO TIMESTAMP,
-    DESC_OBSERVACAO_REVISAO CLOB,
+    DESC_OBSERVACAO_REVISAO VARCHAR2(3000 CHAR),
     NOME_AUTOR_ORIGINAL VARCHAR2(200 CHAR),
     QTDE_DENUNCIA NUMBER(10) DEFAULT 0 NOT NULL,
     NUMR_VERSAO NUMBER(10) DEFAULT 1 NOT NULL,
-    DESC_OBSERVACAO_SUBMISSAO CLOB,
+    DESC_OBSERVACAO_SUBMISSAO VARCHAR2(3000 CHAR),
 
     CONSTRAINT PK_CIA_PROMPT PRIMARY KEY (ID_PROMPT),
 
@@ -64,7 +64,7 @@ CREATE TABLE CIA_PROMPT (
 
     CONSTRAINT CK_CIA_PROMPT_DIFICULDADE
         CHECK (
-            NIVEL_DIFICULDADE IN (
+            TIPO_NIVEL_DIFICULDADE IN (
                 'IN',
                 'IT',
                 'AV'
@@ -146,7 +146,7 @@ CREATE INDEX IDX_CIA_PROMPT_CATEGORIA
     ON CIA_PROMPT (ID_PROMPT_CATEGORIA)
 
 CREATE INDEX IDX_CIA_PROMPT_DIFICULDADE
-    ON CIA_PROMPT (NIVEL_DIFICULDADE)
+    ON CIA_PROMPT (TIPO_NIVEL_DIFICULDADE)
 
 CREATE INDEX IDX_CIA_PROMPT_REVISAO
     ON CIA_PROMPT (
@@ -165,14 +165,14 @@ COMMENT ON TABLE CIA_PROMPT IS
 COMMENT ON COLUMN CIA_PROMPT.ID_PROMPT IS
 'Identificador único do prompt cadastrado.'
 
-COMMENT ON COLUMN CIA_PROMPT.TITULO_PROMPT IS
+COMMENT ON COLUMN CIA_PROMPT.NOME_TITULO IS
 'Título principal do prompt disponibilizado na plataforma.'
 
 COMMENT ON COLUMN CIA_PROMPT.DESC_PROMPT IS
-'Descrição resumida do prompt cadastrado.'
+'Descrição resumida do prompt cadastrado (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT.DESC_CONTEUDO IS
-'Conteúdo completo do prompt utilizado pelos usuários.'
+'Conteúdo completo do prompt utilizado pelos usuários (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT.ID_PROMPT_CATEGORIA IS
 'Identificador da categoria associada ao prompt.'
@@ -180,16 +180,16 @@ COMMENT ON COLUMN CIA_PROMPT.ID_PROMPT_CATEGORIA IS
 COMMENT ON COLUMN CIA_PROMPT.ID_MODELO IS
 'Identificador do modelo de inteligência artificial recomendado para utilização do prompt.'
 
-COMMENT ON COLUMN CIA_PROMPT.DESC_ETIQUETA__PROMPT IS
+COMMENT ON COLUMN CIA_PROMPT.JSON_ETIQUETA_PROMPT IS
 'Lista de etiquetas utilizadas para categorização e pesquisa do prompt armazenada em formato JSON.'
 
-COMMENT ON COLUMN CIA_PROMPT.NIVEL_DIFICULDADE IS
+COMMENT ON COLUMN CIA_PROMPT.TIPO_NIVEL_DIFICULDADE IS
 'Nível de dificuldade do prompt. IN = Iniciante, IT = Intermediário, AV = Avançado.'
 
 COMMENT ON COLUMN CIA_PROMPT.QTDE_USO IS
 'Quantidade total de utilizações registradas para o prompt.'
 
-COMMENT ON COLUMN CIA_PROMPT.INFO_VARIAVEL IS
+COMMENT ON COLUMN CIA_PROMPT.JSON_VARIAVEL IS
 'Lista estruturada das variáveis utilizadas no prompt armazenada em formato JSON.'
 
 COMMENT ON COLUMN CIA_PROMPT.CODG_USUARIO_AUTOR IS
@@ -229,7 +229,7 @@ COMMENT ON COLUMN CIA_PROMPT.DATA_REVISAO IS
 'Data e hora da revisão realizada no prompt.'
 
 COMMENT ON COLUMN CIA_PROMPT.DESC_OBSERVACAO_REVISAO IS
-'Observações registradas durante o processo de revisão do prompt.'
+'Observações registradas durante o processo de revisão do prompt (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT.NOME_AUTOR_ORIGINAL IS
 'Nome do autor original do prompt, quando aplicável.'
@@ -241,4 +241,4 @@ COMMENT ON COLUMN CIA_PROMPT.NUMR_VERSAO IS
 'Número atual da versão do prompt.'
 
 COMMENT ON COLUMN CIA_PROMPT.DESC_OBSERVACAO_SUBMISSAO IS
-'Observações informadas durante a submissão do prompt.'
+'Observações informadas durante a submissão do prompt (tipo do arquivo .md).'

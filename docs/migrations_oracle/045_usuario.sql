@@ -14,7 +14,7 @@ CREATE TABLE CIA_USUARIO (
     CODG_USUARIO VARCHAR2(32 CHAR),
     TIPO_PERFIL VARCHAR2(2 CHAR) DEFAULT 'SV' NOT NULL,
     NOME_ORGAO VARCHAR2(200 CHAR) DEFAULT '' NOT NULL,
-    URL_AVATAR VARCHAR2(500 CHAR),
+    JSON_AVATAR BLOB,
     INDI_ATIVO VARCHAR2(1 CHAR) DEFAULT 'S' NOT NULL,
     DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     DATA_ATUALIZACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -99,8 +99,8 @@ COMMENT ON COLUMN CIA_USUARIO.TIPO_PERFIL IS
 COMMENT ON COLUMN CIA_USUARIO.NOME_ORGAO IS
 'Nome do órgão ou instituição ao qual o usuário está vinculado.'
 
-COMMENT ON COLUMN CIA_USUARIO.URL_AVATAR IS
-'Endereço da imagem de avatar associada ao usuário.'
+COMMENT ON COLUMN CIA_USUARIO.JSON_AVATAR IS
+'Conteúdo da imagem de avatar associada ao usuário armazenado em formato JSON.'
 
 COMMENT ON COLUMN CIA_USUARIO.INDI_ATIVO IS
 'Indica se o usuário está ativo para acesso à plataforma. S = Sim, N = Não.'
@@ -111,5 +111,4 @@ COMMENT ON COLUMN CIA_USUARIO.DATA_CRIACAO IS
 COMMENT ON COLUMN CIA_USUARIO.DATA_ATUALIZACAO IS
 'Data e hora da última atualização do registro do usuário.'
 
-COMMENT ON COLUMN CIA_USUARIO.HASH_SENHA IS
-'Hash criptográfico da senha utilizada pelo usuário para autenticação.'
+

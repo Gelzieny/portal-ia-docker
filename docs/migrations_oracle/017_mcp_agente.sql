@@ -45,16 +45,16 @@ COMMENT ON COLUMN CIA_MCP_AGENTE.NOME_AGENTE IS
 'Nome de identificação do agente MCP.'
 
 COMMENT ON COLUMN CIA_MCP_AGENTE.DESC_AGENTE IS
-'Descrição detalhada do agente MCP e suas funcionalidades.'
+'Descrição detalhada do agente MCP e suas funcionalidades (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_AGENTE.INFO_CAPACIDADE IS
-'Lista de capacidades e funcionalidades suportadas pelo agente MCP.'
+'Lista de capacidades e funcionalidades suportadas pelo agente MCP (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_AGENTE.NOME_MODELO_BASE IS
 'Nome do modelo base utilizado pelo agente MCP.'
 
 COMMENT ON COLUMN CIA_MCP_AGENTE.DESC_PROMPT_SISTEMA IS
-'Prompt de sistema utilizado para configuração comportamental do agente MCP.'
+'Prompt de sistema utilizado para configuração comportamental do agente MCP (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MCP_AGENTE.NUMR_ORDEM IS
 'Ordem de exibição do agente MCP nas interfaces da plataforma.'

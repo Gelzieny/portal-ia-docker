@@ -40,7 +40,7 @@ COMMENT ON COLUMN CIA_FUNCIONALIDADE.NOME_FUNCIONALIDADE IS
 'Nome de exibição da funcionalidade na aplicação.'
 
 COMMENT ON COLUMN CIA_FUNCIONALIDADE.DESC_FUNCIONALIDADE IS
-'Descrição detalhada da funcionalidade disponível na aplicação.'
+'Descrição detalhada da funcionalidade disponível na aplicação (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_FUNCIONALIDADE.AREA_FUNCIONALIDADE IS
 'Área funcional da aplicação à qual a funcionalidade pertence.'

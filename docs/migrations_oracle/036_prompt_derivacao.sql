@@ -57,7 +57,7 @@ COMMENT ON COLUMN CIA_PROMPT_DERIVACAO.ID_PROMPT_FORK IS
 'Identificador do novo prompt derivado a partir do prompt original.'
 
 COMMENT ON COLUMN CIA_PROMPT_DERIVACAO.DESC_MENSAGEM_FORK IS
-'Mensagem ou observação informada durante a criação do fork do prompt.'
+'Mensagem ou observação informada durante a criação do fork do prompt (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_DERIVACAO.DATA_CRIACAO IS
 'Data e hora de criação do registro de fork do prompt.'

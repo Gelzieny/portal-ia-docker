@@ -96,10 +96,10 @@ COMMENT ON COLUMN CIA_MODELO.ID_CATEGORIA_MODELO IS
 'Identificador da categoria funcional do modelo de inteligência artificial.'
 
 COMMENT ON COLUMN CIA_MODELO.DESC_MODELO IS
-'Descrição detalhada do modelo de inteligência artificial.'
+'Descrição detalhada do modelo de inteligência artificial (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MODELO.INFO_CAPABILIDADE IS
-'Lista de capacidades e funcionalidades suportadas pelo modelo.'
+'Lista de capacidades e funcionalidades suportadas pelo modelo (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MODELO.STAT_MODELO IS
 'Situação atual do modelo na plataforma. B = Beta, D = Disponível, M = Manutenção.'
@@ -111,7 +111,7 @@ COMMENT ON COLUMN CIA_MODELO.INFO_LIMITE_USO IS
 'Informações sobre limites de utilização do modelo.'
 
 COMMENT ON COLUMN CIA_MODELO.DESC_ETIQUETAS IS
-'Lista de etiquetas utilizadas para categorização e pesquisa do modelo.'
+'Lista de etiquetas utilizadas para categorização e pesquisa do modelo (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MODELO.INDI_NOVO IS
 'Indica se o modelo é considerado novo na plataforma. S = Sim, N = Não.'
@@ -135,10 +135,10 @@ COMMENT ON COLUMN CIA_MODELO.INDI_APROVACAO_ACESSO IS
 'Indica se o modelo exige aprovação prévia para utilização. S = Sim, N = Não.'
 
 COMMENT ON COLUMN CIA_MODELO.DESC_RESUMO_ACESSO IS
-'Resumo das regras e condições de acesso ao modelo.'
+'Resumo das regras e condições de acesso ao modelo (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MODELO.DESC_DOCUMENTACAO_ACESSO IS
-'Documentação complementar sobre acesso e utilização do modelo.'
+'Documentação complementar sobre acesso e utilização do modelo (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_MODELO.INFO_ENDPOINT_PADRAO IS
 'Endereço padrão de integração utilizado pelo modelo.'

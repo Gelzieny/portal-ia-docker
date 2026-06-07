@@ -73,10 +73,10 @@ COMMENT ON COLUMN CIA_PROMPT_VERSAO.TITULO_PROMPT IS
 'Título do prompt correspondente à versão registrada.'
 
 COMMENT ON COLUMN CIA_PROMPT_VERSAO.DESC_PROMPT IS
-'Descrição resumida do prompt na versão cadastrada.'
+'Descrição resumida do prompt na versão cadastrada (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_VERSAO.DESC_CONTEUDO IS
-'Conteúdo completo do prompt na versão registrada.'
+'Conteúdo completo do prompt na versão registrada (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_PROMPT_VERSAO.INFO_VARIAVEL IS
 'Lista estruturada das variáveis utilizadas no prompt armazenada em formato JSON.'

@@ -1,7 +1,7 @@
 CREATE TABLE CIA_METRICA (
     ID_METRICA NUMBER(10) NOT NULL,
-    DESC_METRICA CLOB NOT NULL,
-    TIPO_METRICA VARCHAR2(200 CHAR) NOT NULL,
+    DESC_METRICA VARCHAR2(255 CHAR) NOT NULL,
+    TIPO_METRICA VARCHAR2(255 CHAR) NOT NULL,
 
     CONSTRAINT PK_CIA_METRICA PRIMARY KEY (ID_METRICA)
 )
@@ -36,7 +36,7 @@ COMMENT ON COLUMN CIA_METRICA.ID_METRICA IS
 'Identificador único da métrica cadastrada.'
 
 COMMENT ON COLUMN CIA_METRICA.DESC_METRICA IS
-'Descrição textual da métrica utilizada pela plataforma.'
+'Descrição textual da métrica utilizada pela plataforma (tipo do arquivo .md).'
 
 COMMENT ON COLUMN CIA_METRICA.TIPO_METRICA IS
 'Tipo ou categoria da métrica cadastrada.'
